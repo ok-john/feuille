@@ -237,14 +237,14 @@ if you'd like to download the cron job.
 ### How do I remove expired pastes after some time?
 
 You can put that in your crontab (by doing `sudo crontab -e`).
-It will delete all files in `/var/www/htdocs/feuille` that are at least 7
+It will delete all files in `/var/www/feuille` that are at least 7
 days old.
 
 Don't forget to change the folder to the one **feuille**'s using and
 eventually `+7` to the maximum file age you'd like to use.
 
 ```
-0 0 * * * find /var/www/htdocs/feuille -type f -mtime +7 -exec rm {} +
+0 0 * * * find /var/www/feuille -type f -mtime +7 -exec rm {} +
 ```
 
 See
@@ -264,7 +264,7 @@ $ make cgi
 
 Once it's done, you can put `./web/cgi/feuille.cgi` in your website's
 `cgi-bin` folder (usually somewhere like
-`/var/www/htdocs/my.paste.bin/cgi-bin`) and configure your web server
+`/var/www/my.paste.bin/cgi-bin`) and configure your web server
 to execute CGI scripts.
 
 You can then create an HTML form that will send a POST request to the

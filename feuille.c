@@ -39,7 +39,7 @@ char    *argv0;
 Settings settings = {
     .address             = "0.0.0.0",
     .url                 = "http://localhost",
-    .output              = "/var/www/htdocs/feuille",
+    .output              = "/var/www/feuille",
     .user                = "www",
 
     .id_length           = 4,

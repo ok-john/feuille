@@ -49,7 +49,7 @@ and IPv6 addresses (won't work on OpenBSD).
 **-o path**
 : Sets the path where **feuille** will output the pastes (and chroot,
 if possible).
-: Default: `/var/www/htdocs/feuille`
+: Default: `/var/www/feuille`
 
 **-s bytes**
 : Sets the maximum size for every paste (in bytes).
@@ -88,7 +88,7 @@ you might not want to set this to a huge number.
 # EXAMPLES
 
 **sudo feuille**
-: Runs feuille in the background, chrooting into `/var/www/htdocs/feuille`,
+: Runs feuille in the background, chrooting into `/var/www/feuille`,
 dropping root privileges and spawning worker processes to accept
 incoming connections.
 
