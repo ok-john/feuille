@@ -232,6 +232,19 @@ int main(int argc, char *argv[])
 
     chdir(path);
 
+    /* user checks */
+    if (strlen(settings.user) == 0)
+        settings.user = "nobody";
+
+    verbose(2, "getting uid and gid of user `%s'...", settings.user);
+
+    struct passwd *user;
+    if ((user = getpwnam(settings.user)) == NULL)
+        die(1, "User `%s' doesn't exist\n", settings.user);
+
+    int uid = user->pw_uid;
+    int gid = user->pw_gid;
+
     /* server socket creation (before dropping root permissions) */
     verbose(1, "initializing server socket...");
 
@@ -239,20 +252,16 @@ int main(int argc, char *argv[])
     if ((server = initialize_server()) == -1)
         die(errno, "Failed to initialize server socket: %s\n", strerror(errno));
 
+    /* make feuille run in the background */
+    if (!settings.foreground) {
+        verbose(1, "making feuille run in the background...");
+        verbose(2, "closing input / output file descriptors...");
+
+        daemon(1, 0);
+    }
+
     /* chroot and drop root permissions */
     if (getuid() == 0) {
-        if (strlen(settings.user) == 0)
-            settings.user = "nobody";
-
-        verbose(2, "getting uid and gid of user `%s'...", settings.user);
-
-        struct passwd *user;
-        if ((user = getpwnam(settings.user)) == NULL)
-            die(1, "User `%s' doesn't exist\n", settings.user);
-
-        int uid = user->pw_uid;
-        int gid = user->pw_gid;
-
         verbose(2, "setting owner of `%s' to `%s'...", path, settings.user);
         chown(path, uid, gid);
 
@@ -270,26 +279,6 @@ int main(int argc, char *argv[])
         syslog(LOG_WARNING, "running as non-root user.");
         syslog(LOG_WARNING, "`chroot' and user switching have been disabled.");
         puts("");
-    }
-
-    /* run feuille in the background */
-    if (!settings.foreground) {
-        verbose(1, "making feuille run in the background...");
-        verbose(2, "closing input / output file descriptors...");
-
-        int pid;
-        if ((pid = fork()) < 0)
-            exit(1);
-
-        else if (pid > 0)
-            exit(0);
-
-        if (setsid() < 0)
-            exit(1);
-
-        freopen("/dev/null", "r", stdin);
-        freopen("/dev/null", "w", stdout);
-        freopen("/dev/null", "w", stderr);
     }
 
     /* OpenBSD-only security measures */
