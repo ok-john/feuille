@@ -2,7 +2,6 @@
  * bin.c
  *  Pastes handling.
  *
- *
  * Copyright (c) 2022
  *     Tom MTT. <tom@heimdall.pm>
  *
