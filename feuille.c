@@ -294,7 +294,7 @@ int main(int argc, char *argv[])
 
     /* OpenBSD-only security measures */
     #ifdef __OpenBSD__
-        pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
+    pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
     #endif
 
     /* create a thread pool for incoming connections */
