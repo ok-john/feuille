@@ -50,11 +50,11 @@ $(TARGET).1: $(TARGET).1.md
 ADDR = 127.0.0.1
 PORT = 8888
 
-cgi: web/cgi/feuille.cgi
+cgi: cgi/feuille.cgi
 
-web/cgi/feuille.cgi: web/cgi/feuille.cgi.c
-	@printf "%-8s web/cgi/feuille.cgi.c -o $@\n" "$(CC)"
-	@$(CC) $(CFLAGS) $(LDFLAGS) -static -DADDR=\"$(ADDR)\" -DPORT=$(PORT) web/cgi/feuille.cgi.c -o $@
+cgi/feuille.cgi: cgi/feuille.cgi.c
+	@printf "%-8s cgi/feuille.cgi.c -o $@\n" "$(CC)"
+	@$(CC) $(CFLAGS) $(LDFLAGS) -static -DADDR=\"$(ADDR)\" -DPORT=$(PORT) cgi/feuille.cgi.c -o $@
 
 .SUFFIXES: .c .o
 .c.o:
