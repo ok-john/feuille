@@ -29,7 +29,7 @@ install: $(TARGET) $(TARGET).1
 
 	@echo "installing manpage to $(MAN)/man1"
 	@mkdir -p $(MAN)/man1
-	@mv -f $(TARGET).1 $(MAN)/man1
+	@cp -f $(TARGET).1 $(MAN)/man1
 	@chmod 644 $(MAN)/man1/$(TARGET).1
 
 uninstall: $(PREFIX)/bin/$(TARGET) $(MAN)/man1/$(TARGET).1
