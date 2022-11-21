@@ -99,8 +99,8 @@ Guess what? We made aliases!
 Put those into your `~/.{ba,z,k}shrc`:
 
 ```sh
-alias pst="$NC heimdall.pm 8888"
-alias spst="gpg -cao tmp.pgp && cat tmp.pgp | $NC heimdall.pm 8888 && rm tmp.pgp"
+alias pst="nc heimdall.pm 8888"
+alias spst="gpg -cao tmp.pgp && cat tmp.pgp | nc heimdall.pm 8888 && rm tmp.pgp"
 ```
 
 Now, you can use **feuille** like this:
