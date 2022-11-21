@@ -3,4 +3,4 @@
 *.o
 
 feuille
-web/cgi/feuille.cgi
+cgi/feuille.cgi
