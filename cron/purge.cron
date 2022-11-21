@@ -1,0 +1,1 @@
+0   0   *   *   *       find /var/www/htdocs/feuille -type f -mtime +7 -exec rm {} +
