@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-</head>
+    <title>feuille - socket-based pastebin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 <body>
+    <h1>feuille</h1>
+    <h2>send a paste from this form</h2>
     <form role="form" action="/cgi-bin/feuille.cgi" method="post" enctype="text/plain">
-        <textarea name="paste"></textarea>
+        <textarea name="paste" style="font-family: monospace; width:98vw; height:70vh"></textarea>
         <input type="submit" value="send paste">
     </form>
 </body>
