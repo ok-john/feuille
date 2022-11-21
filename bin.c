@@ -34,7 +34,7 @@ char *generate_id(int min_length)
 
     /* allocate a buffer to store the ID */
     char *buffer;
-    if ((buffer = calloc(length + 1, sizeof(char))) == NULL)
+    if ((buffer = malloc((length + 1) * sizeof(char))) == NULL)
         return NULL;
 
     /* for each letter, generate a random one */
@@ -43,6 +43,7 @@ char *generate_id(int min_length)
             return NULL;
 
         buffer[i]     = id_symbols[rand() % strlen(id_symbols)];
+        buffer[i + 1] = 0;
 
         /* collision? */
         if (i == length - 1 && paste_exists(buffer)) {
@@ -54,12 +55,10 @@ char *generate_id(int min_length)
                 free(buffer);
                 return NULL;
             }
-
             buffer = tmp;
         }
     }
 
-    buffer[length] = 0;
     return buffer;
 }
 
