@@ -1,0 +1,6 @@
+.clangd
+
+*.o
+
+feuille
+web/cgi/feuille.cgi
