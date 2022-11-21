@@ -218,6 +218,7 @@ int main(int argc, char *argv[])
     if (argc != 0)
         usage(1);
 
+
     /* output folder checks */
     char path[PATH_MAX];
 
@@ -245,6 +246,7 @@ int main(int argc, char *argv[])
     int uid = user->pw_uid;
     int gid = user->pw_gid;
 
+
     /* server socket creation (before dropping root permissions) */
     verbose(1, "initializing server socket...");
 
@@ -259,6 +261,7 @@ int main(int argc, char *argv[])
 
         daemon(1, 0);
     }
+
 
     /* chroot and drop root permissions */
     if (getuid() == 0) {
@@ -285,6 +288,7 @@ int main(int argc, char *argv[])
     #ifdef __OpenBSD__
     pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
     #endif
+
 
     /* create a thread pool for incoming connections */
     verbose(1, "initializing worker pool...");
@@ -367,6 +371,7 @@ int main(int argc, char *argv[])
         } else if (pid < 0)
             die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
     }
+
 
     sleep(1);
 
