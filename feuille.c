@@ -83,11 +83,6 @@ void version(void)
  */
 int main(int argc, char *argv[])
 {
-    /* pledge stage 1 */
-    #ifdef __OpenBSD__
-    pledge("stdio rpath wpath cpath inet chown getpw proc id", "stdio wpath inet");
-    #endif
-
     /* locale */
     setlocale(LC_ALL, "");
 
@@ -297,9 +292,9 @@ int main(int argc, char *argv[])
         freopen("/dev/null", "w", stderr);
     }
 
-    /* pledge stage 2 */
+    /* OpenBSD-only security measures */
     #ifdef __OpenBSD__
-    pledge("stdio proc inet", NULL);
+    pledge("stdio proc inet", "stdio wpath inet");
     #endif
 
     /* create a thread pool for incoming connections */
@@ -383,11 +378,6 @@ int main(int argc, char *argv[])
         } else if (pid < 0)
             die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
     }
-
-    /* pledge stage 3 */
-    #ifdef __OpenBSD__
-    pledge("stdio", NULL);
-    #endif
 
     sleep(1);
 
