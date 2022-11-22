@@ -262,7 +262,7 @@ $ make cgi
 `ADDR` and `PORT` can be set to the address and port on which
 **feuille** listens, respectively.
 
-Once it's done, you can put `./web/cgi/feuille.cgi` in your website's
+Once it's done, you can put `./cgi/feuille.cgi` in your website's
 `cgi-bin` folder (usually somewhere like
 `/var/www/my.paste.bin/cgi-bin`) and configure your web server
 to execute CGI scripts.
@@ -270,7 +270,7 @@ to execute CGI scripts.
 You can then create an HTML form that will send a POST request to the
 CGI script. The form must have `enctype="text/plain"` and must contain
 only one input or textarea. See
-[web/cgi/form.html](https://basedwa.re/tmtt/feuille/src/branch/main/cgi/form.html)
+[cgi/form.html](https://basedwa.re/tmtt/feuille/src/branch/main/cgi/form.html)
 for a sample form.
 
 ## Authors
