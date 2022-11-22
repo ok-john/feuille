@@ -234,17 +234,20 @@ int main(int argc, char *argv[])
     chdir(path);
 
     /* user checks */
-    if (strlen(settings.user) == 0)
-        settings.user = "nobody";
+    int uid, gid;
+    if (getuid() == 0) {
+        if (strlen(settings.user) == 0)
+            settings.user = "nobody";
 
-    verbose(2, "getting uid and gid of user `%s'...", settings.user);
+        verbose(2, "getting uid and gid of user `%s'...", settings.user);
 
-    struct passwd *user;
-    if ((user = getpwnam(settings.user)) == NULL)
-        die(1, "User `%s' doesn't exist\n", settings.user);
+        struct passwd *user;
+        if ((user = getpwnam(settings.user)) == NULL)
+            die(1, "User `%s' doesn't exist\n", settings.user);
 
-    int uid = user->pw_uid;
-    int gid = user->pw_gid;
+        uid = user->pw_uid;
+        gid = user->pw_gid;
+    }
 
 
     /* server socket creation (before dropping root permissions) */
