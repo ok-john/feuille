@@ -1,5 +1,5 @@
 # feuille version
-VERSION = 1.0.0
+VERSION = 1.3.16
 
 # paths (customize them to fit your system)
 PREFIX = /usr/local
