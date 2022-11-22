@@ -44,7 +44,7 @@ and IPv6 addresses (won't work on OpenBSD).
 
 **-p port**
 : Sets the port that **feuille** will listen on.
-: Default: `8888`
+: Default: `9999`
 
 **-o path**
 : Sets the path where **feuille** will output the pastes (and chroot,

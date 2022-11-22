@@ -44,7 +44,7 @@ Settings settings = {
 
     .id_length           = 4,
     .worker_count        = 1,
-    .port                = 8888,
+    .port                = 9999,
     .timeout             = 4,
     .max_size            = 2097152, /* = 2MiB   = 1024 * 1024 * 2 */
     .buffer_size         = 131072,  /* = 128KiB = 1024 * 128      */

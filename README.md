@@ -50,11 +50,11 @@ logs like this:
 
 ```console
 // sending text
-$ echo Hello, World! | nc heimdall.pm 8888
+$ echo Hello, World! | nc heimdall.pm 9999
 https://bin.heimdall.pm/abcd
 
 // sending files
-$ cat feuille.c | nc heimdall.pm 8888
+$ cat feuille.c | nc heimdall.pm 9999
 https://bin.heimdall.pm/efgh
 ```
 
@@ -80,7 +80,7 @@ You'll need `gpg` for this. `-c` means encryption using a password,
 
 ```console
 $ cat secret.txt | gpg -cao tmp.pgp
-$ cat tmp.pgp | nc heimdall.pm 8888
+$ cat tmp.pgp | nc heimdall.pm 9999
 https://bin.heimdall.pm/ijkl
 ```
 
@@ -99,8 +99,8 @@ Guess what? We made aliases!
 Put those into your `~/.{ba,z,k}shrc`:
 
 ```sh
-alias pst="nc heimdall.pm 8888"
-alias spst="gpg -cao tmp.pgp && cat tmp.pgp | nc heimdall.pm 8888 && rm tmp.pgp"
+alias pst="nc heimdall.pm 9999"
+alias spst="gpg -cao tmp.pgp && cat tmp.pgp | nc heimdall.pm 9999 && rm tmp.pgp"
 ```
 
 Now, you can use **feuille** like this:

@@ -48,7 +48,7 @@ $(TARGET).1: $(TARGET).1.md
 	@sed "s/{VERSION}/$(VERSION)/g" $(TARGET).1.md | pandoc -s -t man -o $@
 
 ADDR = 127.0.0.1
-PORT = 8888
+PORT = 9999
 
 cgi: cgi/feuille.cgi
 
