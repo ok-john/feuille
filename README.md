@@ -223,11 +223,10 @@ You can put that in your crontab (by doing `sudo crontab -e`).
 It will start **feuille** every time the system starts.
 No need for some fancy service file :DDD
 
-Obviously, you can put some options after `feuille`, like `-o
-/var/feuille` or `-v`.
+Want to stop feuille? `pkill feuille` will do the job.
 
 ```
-@reboot feuille
+@reboot feuille -U https://my.paste.bin
 ```
 
 See
