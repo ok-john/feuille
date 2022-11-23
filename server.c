@@ -164,7 +164,7 @@ int accept_connection(int socket)
  */
 void close_connection(int connection)
 {
-    /* prevent reading / writing to the socket */
+    /* prevent reading from / writing to the socket */
     shutdown(connection, SHUT_RDWR);
 
     /* close the socket */
