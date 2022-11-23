@@ -43,7 +43,7 @@ $(TARGET): $(OBJ)
 	@printf "%-8s $(OBJ) -o $@\n" "$(CC)"
 	@$(CC) $(LDFLAGS) $(OBJ) -o $@
 
-$(TARGET).1: $(TARGET).1.md
+$(TARGET).1: $(TARGET).1.md config.mk
 	@printf "%-8s $(TARGET).1.md -o $@\n" "pandoc"
 	@sed "s/{VERSION}/$(VERSION)/g" $(TARGET).1.md | pandoc -s -t man -o $@
 
