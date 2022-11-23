@@ -217,8 +217,6 @@ char *read_paste(int connection)
         }
     }
 
-    printf("%d\n", errno);
-
     /* is the buffer empty? */
     if (total_size == 0) {
         /* yup, free the buffer and return an error */
