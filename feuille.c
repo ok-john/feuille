@@ -340,6 +340,8 @@ int main(int argc, char *argv[])
                                 send_response(connection, url);
 
                                 verbose(1, "All done.");
+
+                                free(url);
                             } else {
                                 error("error while making a valid URL.");
                                 send_response(connection, "Could not create your paste URL.\nPlease try again later.\n");
@@ -348,10 +350,14 @@ int main(int argc, char *argv[])
                             error("error while writing paste to disk.");
                             send_response(connection, "Could not write your paste to disk.\nPlease try again later.\n");
                         }
+
+                        free(id);
                     } else {
                         error("error while generating a random ID.");
                         send_response(connection, "Could not generate your paste ID.\nPlease try again later.\n");
                     }
+
+                    free(paste);
                 } else {
                     if (errno == EFBIG)
                         send_response(connection, "Paste too big.\n");
@@ -364,11 +370,6 @@ int main(int argc, char *argv[])
 
                     error("error %d while reading paste from incoming connection.", errno);
                 }
-
-                /* free resources */
-                free(paste);
-                free(id);
-                free(url);
 
                 /* close connection */
                 close_connection(connection);

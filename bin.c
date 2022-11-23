@@ -13,6 +13,7 @@
 
 #include "bin.h"
 
+#include <errno.h>    /* for errno                                      */
 #include <stdio.h>    /* for NULL, fclose, fopen, fputs, snprintf, FILE */
 #include <stdlib.h>   /* for calloc, free, malloc, rand, realloc        */
 #include <string.h>   /* for strlen                                     */
@@ -39,8 +40,11 @@ char *generate_id(int min_length)
 
     /* for each letter, generate a random one */
     for (int i = 0; i < length; i++) {
-        if (i > 8 * min_length)
+        if (i > 8 * min_length) {
+            errno = EFBIG;
+            free(buffer);
             return NULL;
+        }
 
         buffer[i]     = id_symbols[rand() % strlen(id_symbols)];
         buffer[i + 1] = 0;
@@ -55,6 +59,7 @@ char *generate_id(int min_length)
                 free(buffer);
                 return NULL;
             }
+
             buffer = tmp;
         }
     }
