@@ -188,6 +188,7 @@ char *read_paste(int connection)
 
     /* read all data until EOF is received, or max file size is reached, or the socket timeouts... */
     /* each time, the data is appended to the buffer, once it's been reallocated a larger size */
+    errno = 0;
     long size;
     while ((size = recv(connection, buffer + total_size, buffer_size - total_size, 0)) > 0) {
         total_size += size;
@@ -216,11 +217,15 @@ char *read_paste(int connection)
         }
     }
 
+    printf("%d\n", errno);
+
     /* is the buffer empty? */
     if (total_size == 0) {
         /* yup, free the buffer and return an error */
+        if (errno != EAGAIN)
+            errno = ENOENT;
+
         free(buffer);
-        errno = ENOENT;
         return NULL;
     }
 

@@ -354,9 +354,12 @@ int main(int argc, char *argv[])
                     }
                 } else {
                     if (errno == EFBIG)
-                        send_response(connection, "File too big.\n");
+                        send_response(connection, "Paste too big.\n");
 
                     if (errno == ENOENT)
+                        send_response(connection, "Empty paste.\n");
+
+                    if (errno == EAGAIN)
                         send_response(connection, "Timeout'd.\n");
 
                     error("error %d while reading paste from incoming connection.", errno);
