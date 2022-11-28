@@ -270,6 +270,11 @@ int main(int argc, char *argv[])
         daemon(1, 0);
     }
 
+    /* ignore most signals that could kill feuille */
+    verbose(3, "ignoring signals that could kill feuille...");
+
+    signal(SIGPIPE, SIG_IGN); /* when send(2) or write(2) fails */
+
 
     /* chroot and drop root permissions */
     if (getuid() == 0) {
