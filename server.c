@@ -221,7 +221,7 @@ char *read_paste(int connection)
     if (total_size == 0) {
         /* yup, free the buffer and return an error */
         if (errno != EAGAIN)
-            errno = ENOENT;
+            errno  = ENOENT;
 
         free(buffer);
         return NULL;
