@@ -13,21 +13,19 @@
 
 #include "server.h"
 
-#include <arpa/inet.h>              /* for inet_pton                            */
-#include <errno.h>                  /* for errno, EFBIG, ENOENT                 */
-#include <netinet/in.h>             /* for sockaddr_in, sockaddr_in6, htons     */
-#include <stdio.h>                  /* for puts                                 */
-#include <stdlib.h>                 /* for free, NULL, malloc, realloc          */
-#include <string.h>                 /* for strcmp, strlen                       */
-#include <strings.h>                /* for bzero                                */
-#include <syslog.h>                 /* for syslog, LOG_WARNING                  */
-#include <sys/socket.h>             /* for setsockopt, bind, socket, AF_INET    */
-#include <sys/time.h>               /* for timeval                              */
-#include <unistd.h>                 /* for close                                */
+#include <arpa/inet.h>   /* for inet_pton                                      */
+#include <errno.h>       /* for errno, EAGAIN, EFBIG, ENOENT                   */
+#include <netinet/in.h>  /* for htons, sockaddr_in, sockaddr_in6, IPPROTO_IPV6 */
+#include <stdio.h>       /* for NULL                                           */
+#include <stdlib.h>      /* for free, malloc, realloc                          */
+#include <string.h>      /* for strcmp, strlen                                 */
+#include <strings.h>     /* for bzero                                          */
+#include <sys/socket.h>  /* for setsockopt, bind, socket, SOL_SOCKET, AF_INET  */
+#include <sys/time.h>    /* for timeval                                        */
+#include <unistd.h>      /* for close                                          */
 
-#include "feuille.h"                /* for Settings, settings                   */
-#include "util.h"                   /* for verbose                              */
-
+#include "feuille.h"     /* for Settings, settings                             */
+#include "util.h"        /* for verbose                                        */
 /**
  * Initialize the server socket.
  * -> the actual socket.

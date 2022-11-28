@@ -15,18 +15,19 @@
 
 #include "feuille.h"
 
-#include <errno.h>     /* for errno, ERANGE, EFBIG, ENOENT                      */
+#include <errno.h>     /* for errno, ERANGE, EAGAIN, EFBIG, ENOENT              */
 #include <limits.h>    /* for USHRT_MAX, ULONG_MAX, CHAR_MAX, PATH_MAX, UCHA... */
 #include <locale.h>    /* for NULL, setlocale, LC_ALL                           */
 #include <pwd.h>       /* for getpwnam, passwd                                  */
-#include <stdio.h>     /* for freopen, puts, stderr, stdin, stdout              */
-#include <stdlib.h>    /* for strtoll, exit, free, realpath, srand              */
+#include <signal.h>    /* for signal, SIGPIPE, SIG_IGN                          */
+#include <stdio.h>     /* for puts                                              */
+#include <stdlib.h>    /* for strtoll, free, realpath, srand                    */
 #include <string.h>    /* for strerror, strlen                                  */
 #include <sys/stat.h>  /* for mkdir                                             */
 #include <sys/wait.h>  /* for wait                                              */
 #include <syslog.h>    /* for syslog, openlog, LOG_WARNING, LOG_NDELAY, LOG_... */
 #include <time.h>      /* for time                                              */
-#include <unistd.h>    /* for fork, access, chdir, chown, chroot, close, getpid */
+#include <unistd.h>    /* for getuid, access, chdir, chown, chroot, close       */
 
 #include "arg.h"       /* for EARGF, ARGBEGIN, ARGEND                           */
 #include "bin.h"       /* for create_url, generate_id, write_paste              */
