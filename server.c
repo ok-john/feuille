@@ -183,7 +183,7 @@ char *read_paste(int connection)
 
     /* allocate buffer to store the data */
     char *buffer;
-    if ((buffer = malloc((buffer_size + 1) * sizeof(char))) == NULL)
+    if ((buffer = malloc((buffer_size + 2) * sizeof(char))) == NULL)
         return NULL;
 
     /* read all data until EOF is received, or max file size is reached, or the socket timeouts... */
@@ -208,7 +208,7 @@ char *read_paste(int connection)
 
             /* reallocate the buffer with a larger size */
             void *tmp;
-            if ((tmp = realloc(buffer, (buffer_size + 1) * sizeof(char))) == NULL) {
+            if ((tmp = realloc(buffer, (buffer_size + 2) * sizeof(char))) == NULL) {
                 free(buffer);
                 return NULL;
             }
@@ -227,8 +227,10 @@ char *read_paste(int connection)
         return NULL;
     }
 
-    /* end the buffer with a null byte */
-    buffer[total_size] = 0;
+    /* end the buffer with a newline and a null byte */
+    buffer[total_size]     = '\n';
+    buffer[total_size + 1] = 0;
+
     return buffer;
 }
 
