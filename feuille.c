@@ -386,7 +386,8 @@ int main(int argc, char *argv[])
     verbose(1, "beginning to accept incoming connections.");
 
     /* wait for children to finish */
-    while(wait(0) > 0);
+    // TODO: handle children exit codes properly
+    while (wait(0) > 0);
     close(server);
 
     return 0;
