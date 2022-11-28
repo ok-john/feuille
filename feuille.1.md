@@ -1,4 +1,4 @@
-% FEUILLE(1) feuille {VERSION}
+% feuille(1) feuille {VERSION}
 % Tom MTT. <tom@heimdall.pm>
 % November 2022
 
