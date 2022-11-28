@@ -20,6 +20,7 @@
 #include <stdlib.h>      /* for free, malloc, realloc                          */
 #include <string.h>      /* for strcmp, strlen                                 */
 #include <strings.h>     /* for bzero                                          */
+#include <syslog.h>      /* for syslog, LOG_WARNING                            */
 #include <sys/socket.h>  /* for setsockopt, bind, socket, SOL_SOCKET, AF_INET  */
 #include <sys/time.h>    /* for timeval                                        */
 #include <unistd.h>      /* for close                                          */
