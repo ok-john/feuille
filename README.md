@@ -74,6 +74,18 @@ $ curl https://bin.heimdall.pm/efgh
 ...
 ```
 
+If you want syntax highlighting on your pastes, you can use `bat`, a
+cat clone with syntax highlighting features. Simply `curl` your paste
+and pipe it to `bat` with the language used.
+
+```console
+$ curl https://bin.heimdall.pm/efgh | bat -l c
+/*
+ * feuille.c
+ *  Main source file.
+...
+```
+
 Want to push the concept further? You can send encrypted files, too!
 You'll need `gpg` for this. `-c` means encryption using a password,
 `-ao tmp.pgp` means ASCII output to file `tmp.pgp`.
