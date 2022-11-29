@@ -171,8 +171,12 @@ int main(int argc, char *argv[])
     /* locale */
     setlocale(LC_ALL, "");
 
-    /* syslog setup */
+    /* syslog */
     openlog("feuille", LOG_NDELAY | LOG_PERROR, LOG_USER);
+
+    /* ignore signals that could kill feuille */
+    signal(SIGPIPE, SIG_IGN); /* when send(2) or write(2) fails */
+
 
     /* settings */
     long long tmp;
@@ -347,6 +351,7 @@ int main(int argc, char *argv[])
     if ((server = initialize_server()) == -1)
         die(errno, "Failed to initialize server socket: %s\n", strerror(errno));
 
+
     /* make feuille run in the background */
     if (!settings.foreground) {
         verbose(1, "making feuille run in the background...");
@@ -354,11 +359,6 @@ int main(int argc, char *argv[])
 
         daemon(1, 0);
     }
-
-    /* ignore most signals that could kill feuille */
-    verbose(3, "ignoring signals that could kill feuille...");
-
-    signal(SIGPIPE, SIG_IGN); /* when send(2) or write(2) fails */
 
 
     /* chroot and drop root permissions */
@@ -381,6 +381,7 @@ int main(int argc, char *argv[])
     /* OpenBSD-only security measures */
     pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
 #endif
+
 
 #ifndef DEBUG
     /* create a thread pool for incoming connections */
