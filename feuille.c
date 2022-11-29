@@ -95,6 +95,8 @@ void accept_loop(int server)
     while ((connection = accept_connection(server))) {
         verbose(1, "--- new incoming connection. connection ID: %d:%d ---", pid, time(0));
 
+        unsigned long paste_size = 0;
+
         char *paste = NULL;
         char *id    = NULL;
         char *url   = NULL;
@@ -102,7 +104,7 @@ void accept_loop(int server)
         /* read paste from connection */
         verbose(1, "reading paste from incoming connection...");
 
-        if ((paste = read_paste(connection)) != NULL) {
+        if ((paste_size = read_paste(connection, &paste)) != 0) {
             /* generate random ID */
             verbose(1, "done.");
             verbose(2, "generating a random ID...");
@@ -112,7 +114,7 @@ void accept_loop(int server)
                 verbose(2, "done.");
                 verbose(1, "writing paste `%s' to disk...", id);
 
-                if (write_paste(paste, id) == 0) {
+                if (write_paste(paste, paste_size, id) == 0) {
                     /* create URL */
                     verbose(1, "done.");
                     verbose(2, "making the right URL...");

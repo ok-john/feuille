@@ -175,15 +175,16 @@ void close_connection(int connection)
  *   connection: the socket associated with the connection.
  * -> the string containing all data sent, or NULL if an error occured. Needs to be freed.
  */
-char *read_paste(int connection)
+unsigned long read_paste(int connection, char **output)
 {
+
     unsigned long buffer_size = settings.buffer_size;
     unsigned long total_size  = 0;
 
     /* allocate buffer to store the data */
     char *buffer;
-    if ((buffer = malloc((buffer_size + 2) * sizeof(char))) == NULL)
-        return NULL;
+    if ((buffer = malloc((buffer_size + 1) * sizeof(char))) == NULL)
+        return 0;
 
     /* read all data until EOF is received, or max file size is reached, or the socket timeouts... */
     /* each time, the data is appended to the buffer, once it's been reallocated a larger size */
@@ -197,7 +198,7 @@ char *read_paste(int connection)
             /* yup, free the buffer and return an error */
             free(buffer);
             errno = EFBIG;
-            return NULL;
+            return 0;
         }
 
         /* have we reached the end of the buffer? */
@@ -207,9 +208,9 @@ char *read_paste(int connection)
 
             /* reallocate the buffer with a larger size */
             void *tmp;
-            if ((tmp = realloc(buffer, (buffer_size + 2) * sizeof(char))) == NULL) {
+            if ((tmp = realloc(buffer, (buffer_size + 1) * sizeof(char))) == NULL) {
                 free(buffer);
-                return NULL;
+                return 0;
             }
 
             buffer = tmp;
@@ -223,14 +224,14 @@ char *read_paste(int connection)
             errno  = ENOENT;
 
         free(buffer);
-        return NULL;
+        return 0;
     }
 
-    /* end the buffer with a newline and a null byte */
-    buffer[total_size]     = '\n';
-    buffer[total_size + 1] = 0;
+    /* end the buffer with a newline */
+    buffer[total_size] = '\n';
 
-    return buffer;
+    *output = buffer;
+    return total_size + 1; /* newline */
 }
 
 /**

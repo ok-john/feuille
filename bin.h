@@ -17,7 +17,7 @@
 #include "feuille.h"
 
 int      paste_exists(char *);
-int      write_paste(char *, char *);
+int      write_paste(char *, unsigned long, char *);
 
 char    *generate_id(int);
 char    *create_url(char *);

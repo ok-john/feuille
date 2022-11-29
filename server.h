@@ -21,7 +21,7 @@ int      initialize_server();
 int      accept_connection(int);
 void     close_connection(int);
 
-char    *read_paste(int);
-int      send_response(int, char *);
+unsigned long   read_paste(int, char **);
+int             send_response(int, char *);
 
 #endif

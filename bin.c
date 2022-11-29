@@ -83,7 +83,7 @@ int paste_exists(char *id)
  *   id: the ID of the paste.
  * -> 0 if done, -1 if not.
  */
-int write_paste(char *paste, char *id)
+int write_paste(char *paste, unsigned long paste_size, char *id)
 {
     /* open the file with write access */
     FILE *file;
@@ -91,7 +91,7 @@ int write_paste(char *paste, char *id)
         return -1;
 
     /* write the content to file */
-    if (fputs(paste, file) == -1) {
+    if (fwrite(paste, paste_size, sizeof(char), file) == -1) {
         fclose(file);
         return -1;
     }
