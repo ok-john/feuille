@@ -408,10 +408,24 @@ int main(int argc, char *argv[])
     verbose(1, "all workers have been initialized.");
     verbose(1, "beginning to accept incoming connections.");
 
-    /* wait for children to finish */
-    // TODO: handle children exit codes properly
-    while (wait(0) > 0);
-    close(server);
 
+    /* fork again if a child dies */
+    int status;
+    int child_pid;
+    while ((child_pid = wait(&status)) > 0) {
+        error("child %d unexpectedly died with exit code %d.", child_pid, WEXITSTATUS(status));
+
+        /* do not fork if child was KILL'ed */
+        if (WTERMSIG(status) == 9)
+            continue;
+
+        if ((pid = fork()) == 0) {
+            accept_loop(server);
+
+        } else if (pid < 0)
+            error("could not fork killed child again: ", strerror(errno));
+    }
+
+    close(server);
     return 0;
 }
