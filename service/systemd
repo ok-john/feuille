@@ -5,7 +5,7 @@
 # $ systemctl start feuille
 
 [Unit]
-Description=Feuille - a fast, dead-simple socket-based pastebin
+Description=feuille - a fast, dead-simple socket-based pastebin
 After=syslog.target network.target
 
 [Service]
