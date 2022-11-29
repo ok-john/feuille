@@ -57,6 +57,7 @@ Settings settings = {
 /* functions declarations */
 static  void     usage(int exit_code);
 static  void     version(void);
+static  void     accept_loop(int);
 
 /**
  * Display feuille's basic usage.
@@ -74,6 +75,83 @@ void usage(int exit_code)
 void version(void)
 {
     die(0, "%s %s by Tom MTT. <tom@heimdall.pm>\n", argv0, VERSION);
+}
+
+void accept_loop(int server)
+{
+    int pid = getpid();
+
+    /* feed the random number god */
+    srand(time(0) + pid);
+
+    /* accept loop */
+    int connection;
+    while ((connection = accept_connection(server))) {
+        verbose(1, "--- new incoming connection. connection ID: %d:%d ---", pid, time(0));
+
+        char *paste = NULL;
+        char *id    = NULL;
+        char *url   = NULL;
+
+        /* read paste from connection */
+        verbose(1, "reading paste from incoming connection...");
+
+        if ((paste = read_paste(connection)) != NULL) {
+            /* generate random ID */
+            verbose(1, "done.");
+            verbose(2, "generating a random ID...");
+
+            if ((id = generate_id(settings.id_length)) != NULL) {
+                /* write paste to disk */
+                verbose(2, "done.");
+                verbose(1, "writing paste `%s' to disk...", id);
+
+                if (write_paste(paste, id) == 0) {
+                    /* create URL */
+                    verbose(1, "done.");
+                    verbose(2, "making the right URL...");
+
+                    if ((url = create_url(id)) != NULL) {
+                        verbose(2, "done.", url);
+                        verbose(1, "sending the link to the client...");
+
+                        send_response(connection, url);
+
+                        verbose(1, "All done.");
+
+                        free(url);
+                    } else {
+                        error("error while making a valid URL.");
+                        send_response(connection, "Could not create your paste URL.\nPlease try again later.\n");
+                    }
+                } else {
+                    error("error while writing paste to disk.");
+                    send_response(connection, "Could not write your paste to disk.\nPlease try again later.\n");
+                }
+
+                free(id);
+            } else {
+                error("error while generating a random ID.");
+                send_response(connection, "Could not generate your paste ID.\nPlease try again later.\n");
+            }
+
+            free(paste);
+        } else {
+            if (errno == EFBIG)
+                send_response(connection, "Paste too big.\n");
+
+            if (errno == ENOENT)
+                send_response(connection, "Empty paste.\n");
+
+            if (errno == EAGAIN)
+                send_response(connection, "Timeout'd.\n");
+
+            error("error %d while reading paste from incoming connection.", errno);
+        }
+
+        /* close connection */
+        close_connection(connection);
+    }
 }
 
 /**
@@ -293,97 +371,28 @@ int main(int argc, char *argv[])
 
     }
 
-#ifdef __OpenBSD__ /* OpenBSD-only security measures */
+#ifdef __OpenBSD__
+    /* OpenBSD-only security measures */
     pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
 #endif
 
-    int pid;
-
-#ifndef DEBUG /* do not fork if in DEBUG mode */
+#ifndef DEBUG
     /* create a thread pool for incoming connections */
     verbose(1, "initializing worker pool...");
 
+    int pid;
     for (int i = 1; i <= settings.worker_count; i++) {
         if ((pid = fork()) == 0) {
             verbose(2, "  worker n. %d...", i);
-#endif
-            pid = getpid();
+            accept_loop(server);
 
-            /* feed the random number god */
-            srand(time(0) + pid);
-
-            /* accept loop */
-            int connection;
-            while ((connection = accept_connection(server))) {
-                verbose(1, "--- new incoming connection. connection ID: %d:%d ---", pid, time(0));
-
-                char *paste = NULL;
-                char *id    = NULL;
-                char *url   = NULL;
-
-                /* read paste from connection */
-                verbose(1, "reading paste from incoming connection...");
-
-                if ((paste = read_paste(connection)) != NULL) {
-                    /* generate random ID */
-                    verbose(1, "done.");
-                    verbose(2, "generating a random ID...");
-
-                    if ((id = generate_id(settings.id_length)) != NULL) {
-                        /* write paste to disk */
-                        verbose(2, "done.");
-                        verbose(1, "writing paste `%s' to disk...", id);
-
-                        if (write_paste(paste, id) == 0) {
-                            /* create URL */
-                            verbose(1, "done.");
-                            verbose(2, "making the right URL...");
-
-                            if ((url = create_url(id)) != NULL) {
-                                verbose(2, "done.", url);
-                                verbose(1, "sending the link to the client...");
-
-                                send_response(connection, url);
-
-                                verbose(1, "All done.");
-
-                                free(url);
-                            } else {
-                                error("error while making a valid URL.");
-                                send_response(connection, "Could not create your paste URL.\nPlease try again later.\n");
-                            }
-                        } else {
-                            error("error while writing paste to disk.");
-                            send_response(connection, "Could not write your paste to disk.\nPlease try again later.\n");
-                        }
-
-                        free(id);
-                    } else {
-                        error("error while generating a random ID.");
-                        send_response(connection, "Could not generate your paste ID.\nPlease try again later.\n");
-                    }
-
-                    free(paste);
-                } else {
-                    if (errno == EFBIG)
-                        send_response(connection, "Paste too big.\n");
-
-                    if (errno == ENOENT)
-                        send_response(connection, "Empty paste.\n");
-
-                    if (errno == EAGAIN)
-                        send_response(connection, "Timeout'd.\n");
-
-                    error("error %d while reading paste from incoming connection.", errno);
-                }
-
-                /* close connection */
-                close_connection(connection);
-            }
-#ifndef DEBUG
         } else if (pid < 0)
             die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
     }
+#else
+    /* do not create a thread pool if in DEBUG mode */
+    verbose(1, "running in DEBUG mode, won't create a worker pool.");
+    accept_loop(server);
 #endif
 
 
