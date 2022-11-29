@@ -77,8 +77,13 @@ void version(void)
     die(0, "%s %s by Tom MTT. <tom@heimdall.pm>\n", argv0, VERSION);
 }
 
+/**
+ * Feuille's accept loop.
+ *   server: the server socket.
+ */
 void accept_loop(int server)
 {
+    /* get current process' pid */
     int pid = getpid();
 
     /* feed the random number god */
