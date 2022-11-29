@@ -1,0 +1,12 @@
+#!/bin/ksh
+# $ mv ./openrc /etc/rc.d/feuille
+# $ rcctl enable feuille
+# $ rcctl set feuille flags -U https://my.paste.bin
+# $ rcctl start feuille
+
+daemon="/usr/local/bin/feuille"
+
+. /etc/rc.d/rc.subr
+
+rc_reload=NO
+rc_cmd $1

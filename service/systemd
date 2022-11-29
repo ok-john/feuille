@@ -1,0 +1,16 @@
+# set the flags you'd like to use in ExecStart
+# $ mv ./systemd /etc/systemd/system/feuille.service
+# $ systemctl daemon-reload
+# $ systemctl enable feuille
+# $ systemctl start feuille
+
+[Unit]
+Description=Feuille - a fast, dead-simple socket-based pastebin
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/feuille -U https://my.paste.bin
+
+[Install]
+WantedBy=multi-user.target
