@@ -104,19 +104,18 @@ int initialize_server()
             return -1;
 
         /* Enable dual-stack mode on supported platforms */
-        #ifndef __OpenBSD__
+#ifndef __OpenBSD__
         verbose(3, "  IPV6_V6ONLY...");
         if (setsockopt(server, IPPROTO_IPV6, IPV6_V6ONLY, &ipv6_only, sizeof(ipv6_only)) < 0)
             return -1;
-
-        #else
+#else
         if (ipv6_only == 0) {
             puts("");
             syslog(LOG_WARNING, "dual-stack mode is disabled on OpenBSD.");
             syslog(LOG_WARNING, "feuille will only listen on the `::' IPv6 address.");
             puts("");
         }
-        #endif
+#endif
 
         /* bind address and port */
         verbose(3, "binding address on the socket...");
