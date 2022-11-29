@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
     setlocale(LC_ALL, "");
 
     /* syslog setup */
-    openlog("feuille", LOG_NDELAY |  LOG_PERROR, LOG_USER);
+    openlog("feuille", LOG_NDELAY | LOG_PERROR, LOG_USER);
 
     /* settings */
     long long tmp;
