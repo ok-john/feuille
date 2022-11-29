@@ -53,12 +53,12 @@ if possible).
 
 **-s bytes**
 : Sets the maximum size for every paste (in bytes).
-: Default: `2097152`B (2MiB)
+: Default: `1048576`B (1MiB)
 
 **-t seconds**
 : Sets the timeout for the client to send the paste (in seconds).
 : If set to zero, no timeout is set. (Not recommended.)
-: Default: `4`s
+: Default: `2`s
 
 **-u**
 : Sets the user that will be used when dropping root privileges.
@@ -83,7 +83,8 @@ client.
 connections.
 : Those are *real* processes, not green / posix threads,
 you might not want to set this to a huge number.
-: Default: the number of threads configured on your machine.
+: Default: the greater of the number of cores in your computer and
+`4` workers.
 
 # EXAMPLES
 

@@ -44,11 +44,11 @@ Settings settings = {
     .user                = "www",
 
     .id_length           = 4,
-    .worker_count        = 1,
+    .worker_count        = 4,
     .port                = 9999,
-    .timeout             = 4,
-    .max_size            = 2097152, /* = 2MiB   = 1024 * 1024 * 2 */
-    .buffer_size         = 131072,  /* = 128KiB = 1024 * 128      */
+    .timeout             = 2,
+    .max_size            = 1048576, /* = 1MiB   = 1024 * 1024 */
+    .buffer_size         = 131072,  /* = 128KiB = 1024 * 128  */
 
     .verbose             = 0,
     .foreground          = 0
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
     long long tmp;
 
     /* set number of workers */
-    if ((tmp = sysconf(_SC_NPROCESSORS_ONLN)) > 0 && tmp <= USHRT_MAX)
+    if ((tmp = sysconf(_SC_NPROCESSORS_ONLN)) > settings.worker_count && tmp <= USHRT_MAX)
         settings.worker_count = tmp;
 
     ARGBEGIN {

@@ -68,13 +68,13 @@ Default: \f[V]/var/www/feuille\f[R]
 .TP
 \f[B]-s bytes\f[R]
 Sets the maximum size for every paste (in bytes).
-Default: \f[V]2097152\f[R]B (2MiB)
+Default: \f[V]1048576\f[R]B (1MiB)
 .TP
 \f[B]-t seconds\f[R]
 Sets the timeout for the client to send the paste (in seconds).
 If set to zero, no timeout is set.
 (Not recommended.)
-Default: \f[V]4\f[R]s
+Default: \f[V]2\f[R]s
 .TP
 \f[B]-u\f[R]
 Sets the user that will be used when dropping root privileges.
@@ -99,7 +99,8 @@ Sets the number of processes that will be spawned to handle the
 connections.
 Those are \f[I]real\f[R] processes, not green / posix threads, you might
 not want to set this to a huge number.
-Default: the number of threads configured on your machine.
+Default: the greater of the number of cores in your computer and
+\f[V]4\f[R] workers.
 .SH EXAMPLES
 .TP
 \f[B]sudo feuille\f[R]
