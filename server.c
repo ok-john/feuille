@@ -227,11 +227,14 @@ unsigned long read_paste(int connection, char **output)
         return 0;
     }
 
-    /* end the buffer with a newline */
-    buffer[total_size] = '\n';
+    /* end the buffer with a newline if there's none */
+    if (buffer[total_size - 1] != '\n') {
+        buffer[total_size]      = '\n';
+        total_size++; /* add newline to total size */
+    }
 
     *output = buffer;
-    return total_size + 1; /* newline */
+    return total_size;
 }
 
 /**
