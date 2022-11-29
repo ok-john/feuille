@@ -16,6 +16,7 @@
 #include "feuille.h"
 
 #include <errno.h>     /* for errno, ERANGE, EAGAIN, EFBIG, ENOENT              */
+#include <grp.h>       /* for initgroups                                        */
 #include <limits.h>    /* for USHRT_MAX, ULONG_MAX, CHAR_MAX, PATH_MAX, UCHA... */
 #include <locale.h>    /* for NULL, setlocale, LC_ALL                           */
 #include <pwd.h>       /* for getpwnam, passwd                                  */
@@ -372,9 +373,17 @@ int main(int argc, char *argv[])
 
         /* privileges drop */
         verbose(2, "dropping root privileges...");
-        setgid(gid);
-        setuid(uid);
 
+        /* switching groups */
+        if (setgid(gid) != 0 || getgid() != gid)
+            die(1, "Could not switch to group for user `%s'\n", settings.user);
+
+        if (initgroups(settings.user, gid) != 0)
+            die(1, "Could not initialize other groups for user `%s'\n", settings.user);
+
+        /* switching user */
+        if (setuid(uid) != 0 || getuid() != uid)
+            die(1, "Could not switch to user `%s'\n", settings.user);
     }
 
 #ifdef __OpenBSD__
@@ -383,7 +392,11 @@ int main(int argc, char *argv[])
 #endif
 
 
-#ifndef DEBUG
+#ifdef DEBUG
+    /* do not create a thread pool if in DEBUG mode */
+    verbose(1, "running in DEBUG mode, won't create a worker pool.");
+    accept_loop(server);
+#else
     /* create a thread pool for incoming connections */
     verbose(1, "initializing worker pool...");
 
@@ -396,12 +409,6 @@ int main(int argc, char *argv[])
         } else if (pid < 0)
             die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
     }
-#else
-    /* do not create a thread pool if in DEBUG mode */
-    verbose(1, "running in DEBUG mode, won't create a worker pool.");
-    accept_loop(server);
-#endif
-
 
     sleep(1);
 
@@ -425,6 +432,7 @@ int main(int argc, char *argv[])
         } else if (pid < 0)
             error("could not fork killed child again: ", strerror(errno));
     }
+#endif
 
     close(server);
     return 0;
