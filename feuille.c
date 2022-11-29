@@ -339,6 +339,7 @@ int main(int argc, char *argv[])
 
         uid = user->pw_uid;
         gid = user->pw_gid;
+
     } else {
         puts("");
         syslog(LOG_WARNING, "running as non-root user.");
