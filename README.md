@@ -152,12 +152,14 @@ That sould be it. Have fun!
 [misc/](https://basedwa.re/tmtt/feuille/src/branch/main/misc),
 [cgi/](https://basedwa.re/tmtt/feuille/src/branch/main/cgi) and
 [cron/](https://basedwa.re/tmtt/feuille/src/branch/main/cron))
+[service/](https://basedwa.re/tmtt/feuille/src/branch/main/service))
     * A list of aliases for your users' `~/.{ba,z,k}shrc`
     * A CGI script that lets the user send pastes directly from your
       website
     * A sample HTML form for your CGI script
     * A cron job that deletes expired pastes
-    * A cron job that runs **feuille** at startup
+    * A SystemD service file
+    * An OpenRC service file
 
 * Lots of options (see [configuration](#configuration))
 * Works on nearly all POSIX-compliant OSes
@@ -231,19 +233,37 @@ either on your computer by doing `man feuille` or on the
 
 ### How do I make feuille run at startup?
 
-You can put that in your crontab (by doing `sudo crontab -e`).
-It will start **feuille** every time the system starts.
-No need for some fancy service file :DDD
+We made some service files for that.
 
-Want to stop feuille? `pkill feuille` will do the job.
+#### SystemD
 
+Tweak
+[service/systemd](https://basedwa.re/tmtt/feuille/src/branch/main/service/systemd)
+to your liking and copy it to `/etc/systemd/system/feuille.service`.
+
+Then, do (as root):
+
+```console
+# systemctl daemon-reload
+# systemctl enable feuille
+# systemctl start feuille
 ```
-@reboot feuille -U https://my.paste.bin
+
+#### OpenRC
+
+Copy
+[service/openrc](https://basedwa.re/tmtt/feuille/src/branch/main/service/openrc)
+into `/etc/rc.d/feuille`.
+
+Then, do (as root):
+
+```console
+# rcctl enable feuille
+# rcctl set feuille flags -U https://my.paste.bin
+# rcctl start feuille
 ```
 
-See
-[cron/startup.cron](https://basedwa.re/tmtt/feuille/src/branch/main/cron/startup.cron)
-if you'd like to download the cron job.
+Tweak the flags to your liking.
 
 ### How do I remove expired pastes after some time?
 
