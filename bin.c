@@ -91,7 +91,7 @@ int write_paste(char *paste, unsigned long paste_size, char *id)
         return -1;
 
     /* write the content to file */
-    if (fwrite(paste, paste_size, sizeof(char), file) == -1) {
+    if (fwrite(paste, sizeof(char), paste_size, file) != paste_size) {
         fclose(file);
         return -1;
     }
