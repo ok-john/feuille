@@ -293,20 +293,20 @@ int main(int argc, char *argv[])
 
     }
 
-    /* OpenBSD-only security measures */
-#ifdef __OpenBSD__
+#ifdef __OpenBSD__ /* OpenBSD-only security measures */
     pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
 #endif
 
+    int pid;
 
+#ifndef DEBUG /* do not fork if in DEBUG mode */
     /* create a thread pool for incoming connections */
     verbose(1, "initializing worker pool...");
 
-    int pid;
     for (int i = 1; i <= settings.worker_count; i++) {
         if ((pid = fork()) == 0) {
             verbose(2, "  worker n. %d...", i);
-
+#endif
             pid = getpid();
 
             /* feed the random number god */
@@ -380,10 +380,11 @@ int main(int argc, char *argv[])
                 /* close connection */
                 close_connection(connection);
             }
-
+#ifndef DEBUG
         } else if (pid < 0)
             die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
     }
+#endif
 
 
     sleep(1);
