@@ -316,10 +316,10 @@ int main(int argc, char *argv[])
         verbose(2, "creating folder `%s'...", settings.output);
 
     if (realpath(settings.output, path) == NULL)
-        die(errno, "Could not get real path of directory `%s': %s\n", settings.output, strerror(errno));
+        die(errno, "could not get real path of directory `%s': %s.\n", settings.output, strerror(errno));
 
     if (access(path, W_OK) != 0)
-        die(errno, "Cannot write to directory `%s': %s\n", path, strerror(errno));
+        die(errno, "cannot write to directory `%s': %s.\n", path, strerror(errno));
 
     chdir(path);
 
@@ -333,7 +333,7 @@ int main(int argc, char *argv[])
 
         struct passwd *user;
         if ((user = getpwnam(settings.user)) == NULL)
-            die(1, "User `%s' doesn't exist\n", settings.user);
+            die(1, "user `%s' doesn't exist.\n", settings.user);
 
         uid = user->pw_uid;
         gid = user->pw_gid;
@@ -350,7 +350,7 @@ int main(int argc, char *argv[])
 
     int server;
     if ((server = initialize_server()) == -1)
-        die(errno, "Failed to initialize server socket: %s\n", strerror(errno));
+        die(errno, "failed to initialize server socket: %f.\n", strerror(errno));
 
 
     /* make feuille run in the background */
@@ -376,14 +376,14 @@ int main(int argc, char *argv[])
 
         /* switching groups */
         if (setgid(gid) != 0 || getgid() != gid)
-            die(1, "Could not switch to group for user `%s'\n", settings.user);
+            die(1, "could not switch to group for user `%s'.\n", settings.user);
 
         if (initgroups(settings.user, gid) != 0)
-            die(1, "Could not initialize other groups for user `%s'\n", settings.user);
+            die(1, "could not initialize other groups for user `%s'.\n", settings.user);
 
         /* switching user */
         if (setuid(uid) != 0 || getuid() != uid)
-            die(1, "Could not switch to user `%s'\n", settings.user);
+            die(1, "could not switch to user `%s'.\n", settings.user);
     }
 
 #ifdef __OpenBSD__
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
             accept_loop(server);
 
         } else if (pid < 0)
-            die(errno, "Could not initialize worker n. %d: %s\n", i, strerror(errno));
+            die(errno, "could not initialize worker n. %d: %s.\n", i, strerror(errno));
     }
 
     sleep(1);
