@@ -18,8 +18,8 @@ LIBS = -L/usr/lib -lc
 CC = cc
 
 # debug build
-CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -ggdb -Wall -Wextra -pedantic -fsanitize=address -fno-omit-frame-pointer -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
-LDFLAGS = -g $(LIBS) -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -ggdb -Wall -Wextra -pedantic -fsanitize=address -fno-omit-frame-pointer -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
+CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
+LDFLAGS = -g $(LIBS)
 
 # release build
 CFLAGS$(DEBUG)  = -std=c99 -Wall -Wextra -Wno-sign-compare -DVERSION=\"$(VERSION)\" -O3 $(INCS)
