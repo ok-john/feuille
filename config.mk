@@ -18,7 +18,7 @@ LIBS = -L/usr/lib -lc
 CC = cc
 
 # debug build
-CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -DVERSION=\"$(VERSION)\" $(INCS)
+CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
 LDFLAGS = -g $(LIBS)
 
 # release build
