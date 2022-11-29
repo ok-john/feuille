@@ -117,6 +117,7 @@ void accept_loop(int server)
                     verbose(2, "making the right URL...");
 
                     if ((url = create_url(id)) != NULL) {
+                        /* send URL */
                         verbose(2, "done.", url);
                         verbose(1, "sending the link to the client...");
 
