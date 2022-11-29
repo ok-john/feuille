@@ -326,7 +326,8 @@ int main(int argc, char *argv[])
     chdir(path);
 
     /* user checks */
-    int uid = 0, gid = 0;
+    uid_t uid = 0;
+    gid_t gid = 0;
     if (getuid() == 0) {
         if (strlen(settings.user) == 0)
             settings.user = "nobody";

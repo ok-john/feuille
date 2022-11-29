@@ -1,5 +1,5 @@
 # feuille version
-VERSION = 1.19.2
+VERSION = 1.19.3
 
 # paths (customize them to fit your system)
 PREFIX = /usr/local
@@ -18,8 +18,8 @@ LIBS = -L/usr/lib -lc
 CC = cc
 
 # debug build
-CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
-LDFLAGS = -g $(LIBS)
+CFLAGS  = -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -ggdb -Wall -Wextra -pedantic -fsanitize=address -fno-omit-frame-pointer -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
+LDFLAGS = -g $(LIBS) -g -std=c99 -Wall -Wextra -Wpedantic -Wno-sign-compare -ggdb -Wall -Wextra -pedantic -fsanitize=address -fno-omit-frame-pointer -DVERSION=\"$(VERSION)\" -DDEBUG $(INCS)
 
 # release build
 CFLAGS$(DEBUG)  = -std=c99 -Wall -Wextra -Wno-sign-compare -DVERSION=\"$(VERSION)\" -O3 $(INCS)
