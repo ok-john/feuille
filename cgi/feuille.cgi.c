@@ -17,7 +17,7 @@
 #include <netinet/in.h>  /* for htons, sockaddr_in, sockaddr_in6               */
 #include <stdio.h>       /* for printf, NULL, BUFSIZ                           */
 #include <stdlib.h>      /* for calloc, free, getenv, exit, strtoll            */
-#include <string.h>      /* for strcmp                                         */
+#include <string.h>      /* for strcmp, strncmp, strstr                        */
 #include <strings.h>     /* for bzero                                          */
 #include <sys/socket.h>  /* for connect, socket, AF_INET, AF_INET6, recv, send */
 #include <unistd.h>      /* for close, read, STDIN_FILENO                      */
@@ -67,7 +67,24 @@ int initialize_socket(char *address, unsigned short port)
     return server;
 }
 
-/* CGI helper functions */
+/* helper functions */
+int remove_char(char *str, char c) {
+    char *src, *dst;
+    int count = 0;
+
+    for (src = dst = str; *src != 0; src++) {
+        *dst = *src;
+
+        if (*dst != c)
+            dst++;
+        else
+            count++;
+    }
+
+    *dst = 0;
+    return count;
+}
+
 void cgi_init()
 {
     printf("Content-Type: text/plain\r\n");
@@ -97,7 +114,7 @@ void cgi_redirect(char *url)
 {
     printf("Status: 301 Moved Permanently\r\n");
     printf("Location: %s\r\n", url);
-    printf("\r\n");
+    printf("%s\r\n", url);
 }
 
 /* main function */
@@ -135,15 +152,17 @@ int main(void)
 
     /* remove `paste=' from request */
     char *paste = request;
-
-    char *offset;
-    if ((offset = strstr(request, "=")) != NULL) {
-        paste   = offset + 1;
-        length -= offset + 1 - request;
+    char *tmp;
+    if ((tmp = strstr(request, "=")) != NULL) {
+        length -= tmp + 1 - request;
+        paste   = tmp + 1;
     }
 
+    /* remove all carriage returns from paste */
+    length -= remove_char(paste, '\r');
+
     /* send paste to feuille */
-    send(socket, paste, length + 1, 0);
+    send(socket, paste, length, 0);
     shutdown(socket, SHUT_WR);
 
     /* receive response from feuille */
@@ -152,7 +171,8 @@ int main(void)
         cgi_die("500 Internal Server Error");
 
     if (recv(socket, response, BUFSIZ, 0) > 0) {
-        if (strstr(response, "http") != NULL)
+        /* check if responses starts with `http' */
+        if (strncmp(response, "http", 4) == 0)
             cgi_redirect(response);
         else
             cgi_ok(response);
