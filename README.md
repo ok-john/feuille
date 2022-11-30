@@ -112,7 +112,7 @@ Put those into your `~/.{ba,z,k}shrc`:
 
 ```sh
 alias pst="nc heimdall.pm 9999"
-alias spst="gpg -cao tmp.pgp && cat tmp.pgp | nc heimdall.pm 9999 && rm tmp.pgp"
+alias spst="gpg -cao /tmp/paste.pgp && cat /tmp/paste.pgp | nc heimdall.pm 9999 && rm /tmp/paste.pgp"
 ```
 
 Now, you can use **feuille** like this:
@@ -126,10 +126,6 @@ https://bin.heimdall.pm/mnop
 $ echo da sup3r sekr1t | spst
 https://bin.heimdall.pm/qrst
 ```
-
-For a complete list of aliases, see
-[here](https://basedwa.re/tmtt/feuille/src/branch/main/misc/aliases)
-and either put those in your `~/.{ba,z,k}shrc` or source it.
 
 That sould be it. Have fun!
 
@@ -149,11 +145,9 @@ That sould be it. Have fun!
     * Uses OS-specific security measures (like OpenBSD's `pledge`)
 
 * Plenty of auxiliary files (see
-[misc/](https://basedwa.re/tmtt/feuille/src/branch/main/misc),
-[cgi/](https://basedwa.re/tmtt/feuille/src/branch/main/cgi) and
-[cron/](https://basedwa.re/tmtt/feuille/src/branch/main/cron))
+[cgi/](https://basedwa.re/tmtt/feuille/src/branch/main/cgi),
+[cron/](https://basedwa.re/tmtt/feuille/src/branch/main/cron) and
 [service/](https://basedwa.re/tmtt/feuille/src/branch/main/service))
-    * A list of aliases for your users' `~/.{ba,z,k}shrc`
     * A CGI script that lets the user send pastes directly from your
       website
     * A sample HTML form for your CGI script

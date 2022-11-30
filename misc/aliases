@@ -1,5 +1,0 @@
-NC="nc"
-BIN="heimdall.pm"
-
-alias pst="$NC $BIN 9999"
-alias spst="gpg -cao /tmp/paste.pgp && cat /tmp/paste.pgp | $NC $BIN 9999 && rm /tmp/paste.pgp"
