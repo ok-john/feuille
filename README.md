@@ -304,7 +304,7 @@ Tom MTT. <tom@heimdall.pm>
 
 ## License
 
-Copyright © 2022 Tom MTT. <tom@heimdall.pm>
+Copyright © 2022 Tom MTT. <tom@heimdall.pm>  
 This program is free software, licensed under the 3-Clause BSD License.
 See LICENSE for more information.
 
