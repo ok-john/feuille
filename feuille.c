@@ -93,6 +93,12 @@ void accept_loop(int server)
     /* accept loop */
     int connection;
     while ((connection = accept_connection(server))) {
+        /* check if the socket is invalid */
+        if (connection == -1) {
+            error("error while accepting incoming connection: %s", strerror(errno));
+            continue;
+        }
+
         verbose(1, "--- new incoming connection. connection ID: %d:%d ---", pid, time(0));
 
         unsigned long paste_size = 0;
