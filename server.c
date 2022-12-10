@@ -110,7 +110,6 @@ int initialize_server()
             return -1;
 #else
         if (ipv6_only == 0) {
-            puts("");
             syslog(LOG_WARNING, "dual-stack mode is disabled on OpenBSD.");
             syslog(LOG_WARNING, "feuille will only listen on the `::' IPv6 address.");
             puts("");

@@ -348,7 +348,6 @@ int main(int argc, char *argv[])
         gid = user->pw_gid;
 
     } else {
-        puts("");
         syslog(LOG_WARNING, "running as non-root user.");
         syslog(LOG_WARNING, "`chroot' and user switching have been disabled.");
         puts("");
