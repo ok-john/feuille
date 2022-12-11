@@ -15,6 +15,7 @@
 
 #include "feuille.h"
 
+#ifndef COSMOPOLITAN
 #include <errno.h>     /* for errno, ERANGE, EAGAIN, EFBIG, ENOENT              */
 #include <grp.h>       /* for initgroups                                        */
 #include <limits.h>    /* for USHRT_MAX, ULONG_MAX, CHAR_MAX, PATH_MAX, UCHA... */
@@ -29,6 +30,7 @@
 #include <syslog.h>    /* for syslog, openlog, LOG_WARNING, LOG_NDELAY, LOG_... */
 #include <time.h>      /* for time                                              */
 #include <unistd.h>    /* for getuid, access, chdir, chown, chroot, close       */
+#endif
 
 #include "arg.h"       /* for EARGF, ARGBEGIN, ARGEND                           */
 #include "bin.h"       /* for create_url, generate_id, write_paste              */
@@ -387,8 +389,11 @@ int main(int argc, char *argv[])
         if (setgid(gid) != 0 || getgid() != gid)
             die(1, "could not switch to group for user `%s'.\n", settings.user);
 
+        #ifndef COSMOPOLITAN
+        /* initgroups doesn't work on cosmopolitan libc yet */
         if (initgroups(settings.user, gid) != 0)
             die(1, "could not initialize other groups for user `%s'.\n", settings.user);
+        #endif
 
         /* switching user */
         if (setuid(uid) != 0 || getuid() != uid)

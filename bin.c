@@ -13,11 +13,13 @@
 
 #include "bin.h"
 
+#ifndef COSMOPOLITAN
 #include <errno.h>    /* for errno                                      */
 #include <stdio.h>    /* for NULL, fclose, fopen, fputs, snprintf, FILE */
 #include <stdlib.h>   /* for calloc, free, malloc, rand, realloc        */
 #include <string.h>   /* for strlen                                     */
 #include <unistd.h>   /* for access, F_OK                               */
+#endif
 
 #include "feuille.h"  /* for Settings, settings                         */
 

@@ -34,8 +34,11 @@
 #ifndef _ARG_H_
 #define _ARG_H_
 
+#ifndef COSMOPOLITAN
 #include <stdlib.h>
 #include <stddef.h>
+#endif
+
 extern char *argv0;
 
 /* use main(int argc, char *argv[]) */

@@ -13,6 +13,7 @@
 
 #include "server.h"
 
+#ifndef COSMOPOLITAN
 #include <arpa/inet.h>   /* for inet_pton                                      */
 #include <errno.h>       /* for errno, EAGAIN, EFBIG, ENOENT                   */
 #include <netinet/in.h>  /* for htons, sockaddr_in, sockaddr_in6, IPPROTO_IPV6 */
@@ -24,6 +25,7 @@
 #include <sys/socket.h>  /* for setsockopt, bind, socket, SOL_SOCKET, AF_INET  */
 #include <sys/time.h>    /* for timeval                                        */
 #include <unistd.h>      /* for close                                          */
+#endif
 
 #include "feuille.h"     /* for Settings, settings                             */
 #include "util.h"        /* for verbose                                        */
@@ -136,9 +138,14 @@ int initialize_server()
  */
 int accept_connection(int socket)
 {
+    /* only needed for cosmopolitan libc */
+    /* we don't do anything with this struct yet */
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
     /* accept the connection */
     /* TODO: maybe retrieve IP address for logging? *maybe* */
-    int connection = accept(socket, (struct sockaddr *)NULL, NULL);
+    int connection = accept(socket, (struct sockaddr*)&address, (socklen_t*)&addrlen);
 
     /* set the timeout for the connection */
     struct timeval timeout = { settings.timeout, 0 };

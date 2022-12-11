@@ -15,11 +15,13 @@
 
 #include "util.h"
 
+#ifndef COSMOPOLITAN
 #include <stdarg.h>   /* for va_end, va_list, va_start                     */
 #include <stdio.h>    /* for snprintf, vsnprintf, vfprintf, BUFSIZ, stderr */
 #include <stdlib.h>   /* for exit                                          */
 #include <syslog.h>   /* for syslog, LOG_DEBUG, LOG_ERR                    */
 #include <unistd.h>   /* for getpid                                        */
+#endif
 
 #include "feuille.h"  /* for Settings, settings                            */
 
