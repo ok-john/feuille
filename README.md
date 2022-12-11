@@ -159,6 +159,7 @@ That sould be it. Have fun!
 * Works on nearly all POSIX-compliant OSes
 * Can be run in the background and as a service
 * IPv6-enabled
+* Now with 100% more (Cosmopolitan libc)[http://justine.lol/cosmopolitan/] support!
 
 ## Installation
 
@@ -194,6 +195,13 @@ $ make
 $ sudo make install
 ```
 
+You can also build using the
+(Cosmopolitan libc)[http://justine.lol/cosmopolitan/], which will
+make an executable capable of running on Linux, OpenBSD, FreeBSD,
+Mac... out of the box. To do so, build with the `COSMO` flag.
+It will produce `feuille` and `feuille.com`, the former being the
+debug binary, and the former the portable one.
+
 If you wish to make a debug build, you can set `DEBUG` to whatever
 comes to your mind.
 
@@ -201,7 +209,7 @@ You can also set `CC` to the compiler of your liking, like `clang` or
 `pcc`.
 
 ```console
-$ make DEBUG=yes CC=clang
+$ make COSMO=y DEBUG=y CC=clang
 ```
 
 In order to compile CGI script(s), run:
