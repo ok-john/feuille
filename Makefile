@@ -10,18 +10,21 @@ TARGET$(COSMO) = feuille
 SRC = feuille.c util.c server.c bin.c
 OBJ = $(SRC:%.c=%.o)
 
+
 all: $(TARGET) feuille.1 cgi
 
 run: $(TARGET)
 	./$(TARGET)
+
 
 clean:
 	@printf "%-8s $(OBJ)\n" "rm"
 	@rm -f $(OBJ)
 
 distclean:
-	@printf "%-8s feuille feuille.com $(OBJ)\n" "rm"
-	@rm -f feuille feuille.com $(OBJ)
+	@printf "%-8s feuille feuille.com feuille.com.dbg $(OBJ)\n" "rm"
+	@rm -f feuille feuille.com feuille.com.dbg $(OBJ)
+
 
 install: $(TARGET) feuille.1
 	@echo "installing executable file to $(PREFIX)/bin"
@@ -34,26 +37,25 @@ install: $(TARGET) feuille.1
 	@cp -f feuille.1 $(MAN)/man1
 	@chmod 644 $(MAN)/man1/feuille.1
 
-uninstall: $(PREFIX)/bin/$(TARGET) $(MAN)/man1/feuille.1
+uninstall:
 	@echo "removing executable file from $(PREFIX)/bin"
 	@rm -f "$(PREFIX)/bin/$(TARGET)"
 
 	@echo "removing manpage from $(MAN)/man1"
 	@rm -f $(MAN)/man1/feuille.1
 
-feuille.1: feuille.1.md config.mk
-	@printf "%-8s feuille.1.md -o feuille.1\n" "pandoc"
-	@sed "s/{VERSION}/$(VERSION)/g" feuille.1.md | pandoc -s -t man -o feuille.1
 
+# manpage
+feuille.1: feuille.1.md config.mk
+	@printf "%-8s $@.md -o $@\n" "pandoc"
+	@sed "s/{VERSION}/$(VERSION)/g" $@.md | pandoc -s -t man -o $@
+
+# standard libc
 feuille: $(OBJ)
-	@printf "%-8s $(OBJ) -o feuille\n" "$(CC)"
-	@$(CC) $(OBJ) -o feuille $(LDFLAGS)
+	@printf "%-8s $(OBJ) -o $@\n" "$(CC)"
+	@$(CC) $(OBJ) -o $@ $(LDFLAGS)
 
 # cosmopolitan libc
-feuille.com: cosmopolitan feuille
-	@printf "%-8s feuille -o feuille.com\n" "objcopy"
-	@objcopy -S -O binary feuille feuille.com
-
 cosmopolitan:
 	@if [ ! -d cosmopolitan ]; then                                                                 \
 	     printf "%-8s https://justine.lol/cosmopolitan/cosmopolitan-amalgamation-2.2.zip\n" "curl" ;\
@@ -65,6 +67,14 @@ cosmopolitan:
 	     rm -rf cosmopolitan-amalgamation-*                                                        ;\
 	fi
 
+feuille.com.dbg: $(OBJ)
+	@printf "%-8s $(OBJ) -o $@\n" "$(CC)"
+	@$(CC) $(OBJ) -o $@ $(LDFLAGS)
+
+feuille.com: cosmopolitan feuille.com.dbg
+	@printf "%-8s $@.dbg -o $@\n" "objcopy"
+	@objcopy -S -O binary $@.dbg $@
+
 # CGI script
 ADDR = 127.0.0.1
 PORT = 9999
@@ -73,9 +83,9 @@ cgi: cgi/feuille.cgi
 
 cgi/feuille.cgi: cgi/feuille.cgi.c
 	@printf "%-8s cgi/feuille.cgi.c -o cgi/feuille.cgi\n" "$(CC)"
-	@$(CC) cgi/feuille.cgi.c -o cgi/feuille.cgi -std=c99 -O3 -static -Wall -Wextra \
-                                                -DADDR=\"$(ADDR)\" -DPORT=$(PORT)  \
-                                                $(INCS) $(LIBS)
+	@$(CC) $@.c -o $@ -std=c99 -O3 -static -Wall -Wextra \
+                      -DADDR=\"$(ADDR)\" -DPORT=$(PORT)  \
+                      $(INCS) $(LIBS)
 
 .SUFFIXES: .c .o
 .c.o:
