@@ -36,7 +36,7 @@ You'll need either `nc` or nmap's `ncat`.
 
 The former is probably already available on your system, but lacks
 some features, which will make you wait for the timeout before
-getting a link to the paste (usually 4 seconds).
+getting a link to the paste (usually 2 seconds).
 
 The latter will have to be installed manually but is more featureful
 and will get a link instantly once everything is sent. It works the
