@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
             die(1, "could not switch to user `%s'.\n", settings.user);
     }
 
-#ifdef __OpenBSD__
+#if defined __OpenBSD__ || defined COSMOPOLITAN
     /* OpenBSD-only security measures */
     pledge("proc stdio rpath wpath cpath inet", "stdio rpath wpath cpath inet");
 #endif
