@@ -7,8 +7,8 @@ include config.mk
 TARGET         = feuille.com
 TARGET$(COSMO) = feuille
 
-SRC    = feuille.c util.c server.c bin.c
-OBJ    = $(SRC:%.c=%.o)
+SRC = feuille.c util.c server.c bin.c
+OBJ = $(SRC:%.c=%.o)
 
 all: $(TARGET) feuille.1 cgi
 
