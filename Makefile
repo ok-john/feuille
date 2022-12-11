@@ -60,7 +60,7 @@ cosmopolitan:
 	     curl -sO "https://justine.lol/cosmopolitan/cosmopolitan-amalgamation-2.2.zip"             ;\
                                                                                                     \
 	     printf "%-8s cosmopolitan-amalgamation-2.2.zip\n" "unzip"                                 ;\
-	     unzip -qf cosmopolitan-amalgamation-2.2.zip -d cosmopolitan                               ;\
+	     unzip -q cosmopolitan-amalgamation-2.2.zip -d cosmopolitan                                ;\
                                                                                                     \
 	     rm -rf cosmopolitan-amalgamation-*                                                        ;\
 	fi
