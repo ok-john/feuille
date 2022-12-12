@@ -159,7 +159,7 @@ That sould be it. Have fun!
 * Works on nearly all POSIX-compliant OSes
 * Can be run in the background and as a service
 * IPv6-enabled
-* Now with 100% more (Cosmopolitan libc)[http://justine.lol/cosmopolitan/] support!
+* Now with 100% more [Cosmopolitan libc](http://justine.lol/cosmopolitan/) support!
 
 ## Installation
 
@@ -196,7 +196,7 @@ $ sudo make install
 ```
 
 You can also build using the
-(Cosmopolitan libc)[http://justine.lol/cosmopolitan/], which will
+[Cosmopolitan libc](http://justine.lol/cosmopolitan/], which will
 make an executable capable of running on Linux, OpenBSD, FreeBSD,
 Mac... out of the box. To do so, build with the `COSMO` flag.
 It will produce `feuille` and `feuille.com`, the former being the
