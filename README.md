@@ -196,7 +196,7 @@ $ sudo make install
 ```
 
 You can also build using the
-[Cosmopolitan libc](http://justine.lol/cosmopolitan/], which will
+[Cosmopolitan libc](http://justine.lol/cosmopolitan/), which will
 make an executable capable of running on Linux, OpenBSD, FreeBSD,
 Mac... out of the box. To do so, build with the `COSMO` flag.
 It will produce `feuille` and `feuille.com`, the former being the
