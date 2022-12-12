@@ -199,8 +199,8 @@ You can also build using the
 [Cosmopolitan libc](http://justine.lol/cosmopolitan/), which will
 make an executable capable of running on Linux, OpenBSD, FreeBSD,
 Mac... out of the box. To do so, build with the `COSMO` flag.
-It will produce `feuille` and `feuille.com`, the former being the
-debug binary, and the former the portable one.
+It will produce `feuille.com.dbg` and `feuille.com`, the former being
+the debug binary, and the latter the portable one.
 
 If you wish to make a debug build, you can set `DEBUG` to whatever
 comes to your mind.
