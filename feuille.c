@@ -389,11 +389,11 @@ int main(int argc, char *argv[])
         if (setgid(gid) != 0 || getgid() != gid)
             die(1, "could not switch to group for user `%s'.\n", settings.user);
 
-        #ifndef COSMOPOLITAN
+#ifndef COSMOPOLITAN
         /* initgroups doesn't work on cosmopolitan libc yet */
         if (initgroups(settings.user, gid) != 0)
             die(1, "could not initialize other groups for user `%s'.\n", settings.user);
-        #endif
+#endif
 
         /* switching user */
         if (setuid(uid) != 0 || getuid() != uid)
