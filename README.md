@@ -132,7 +132,8 @@ That sould be it. Have fun!
 ## Description
 
 * Focuses on speed,
-    * Multi-threaded (using `fork`)
+    * Handles multiple requests at once (using a pool of `fork`'ed
+      workers)
     * Only does what it needs to do
 
 * code quality,
