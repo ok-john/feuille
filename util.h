@@ -11,11 +11,8 @@
  * <https://basedwa.re/tmtt/feuille/src/branch/main/LICENSE>.
  */
 
-#ifndef _UTIL_H_
-#define _UTIL_H_
+#pragma once
 
 void     die(int, char *, ...);
 void     error(char *, ...);
 void     verbose(int, char *, ...);
-
-#endif

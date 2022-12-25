@@ -11,8 +11,7 @@
  * <https://basedwa.re/tmtt/feuille/src/branch/main/LICENSE>.
  */
 
-#ifndef _SERVER_H_
-#define _SERVER_H_
+#pragma once
 
 #include "feuille.h"
 
@@ -23,5 +22,3 @@ void     close_connection(int);
 
 unsigned long   read_paste(int, char **);
 int             send_response(int, char *);
-
-#endif

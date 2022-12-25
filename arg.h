@@ -31,8 +31,7 @@
  * by 20h
  */
 
-#ifndef _ARG_H_
-#define _ARG_H_
+#pragma once
 
 #ifndef COSMOPOLITAN
 #include <stdlib.h>
@@ -79,5 +78,3 @@ extern char *argv0;
                 (brk_ = 1, (argv[0][i_+1] != '\0')?\
                     (&argv[0][i_+1]) :\
                     (argc--, argv++, argv[0])))
-
-#endif

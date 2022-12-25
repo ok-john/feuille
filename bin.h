@@ -11,8 +11,7 @@
  * <https://basedwa.re/tmtt/feuille/src/branch/main/LICENSE>.
  */
 
-#ifndef _BIN_H_
-#define _BIN_H_
+#pragma once
 
 #include "feuille.h"
 
@@ -21,5 +20,3 @@ int      write_paste(char *, unsigned long, char *);
 
 char    *generate_id(int);
 char    *create_url(char *);
-
-#endif

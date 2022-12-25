@@ -11,8 +11,7 @@
  * <https://basedwa.re/tmtt/feuille/src/branch/main/LICENSE>.
  */
 
-#ifndef _FEUILLE_H_
-#define _FEUILLE_H_
+#pragma once
 
 typedef struct Settings {
     char            *address;
@@ -32,5 +31,3 @@ typedef struct Settings {
 } Settings;
 
 extern Settings settings;
-
-#endif
