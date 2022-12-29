@@ -41,20 +41,20 @@ char    *argv0;
 
 /* default settings */
 Settings settings = {
-    .address             = "0.0.0.0",
-    .url                 = "http://localhost",
-    .output              = "/var/www/feuille",
-    .user                = "www",
+    .address            = "0.0.0.0",
+    .url                = "http://localhost",
+    .output             = "/var/www/feuille",
+    .user               = "www",
 
-    .id_length           = 4,
-    .worker_count        = 4,
-    .port                = 9999,
-    .timeout             = 2,
-    .max_size            = 1048576, /* = 1MiB   = 1024 * 1024 */
-    .buffer_size         = 131072,  /* = 128KiB = 1024 * 128  */
+    .id_length          = 4,
+    .worker_count       = 4,
+    .port               = 9999,
+    .timeout            = 2,
+    .max_size           = 1048576, /* = 1MiB   = 1024 * 1024 */
+    .buffer_size        = 131072,  /* = 128KiB = 1024 * 128  */
 
-    .verbose             = 0,
-    .foreground          = 0
+    .verbose            = 0,
+    .foreground         = 0
 };
 
 /* functions declarations */
