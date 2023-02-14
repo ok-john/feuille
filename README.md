@@ -8,6 +8,7 @@ code quality, and security.
     <summary>Table of Contents</summary>
     <ol>
         <li><a href="#usage">Usage</a></li>
+        <li><a href="#description">Description</a></li>
         <li>
             <a href="#installation">Installation</a>
             <ul>
