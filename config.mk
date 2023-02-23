@@ -41,4 +41,4 @@ CFLAGS$(DEBUG)  = -O3 -Wall -Wextra -Wno-sign-compare $(CCFLAGS)
 LDFLAGS$(DEBUG) = -s $(CLDFLAGS)
 
 # static build (uncomment)
-#LD_FLAGS += -static
+#LDFLAGS += -static
